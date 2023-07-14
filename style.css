@@ -1,0 +1,299 @@
+:root {
+    --bgcolor: #f4f9f9;
+    --hovercolor: #aaa;
+    --btcolor: #a4ebf3;
+    --secondary: #ccf2f4;
+    --txtcolor: #454545;
+    --progress: #7ec9d1;
+    --done: #4b9da7;
+}
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    color: var(--txtcolor);
+}
+body {
+    height: 100vh;
+    background-color: var(--bgcolor);
+}
+main {
+    display: flex;
+    align-items: stretch;
+    justify-content: space-between;
+    padding: 2rem;
+    height: 100%;
+}
+i {
+    font-size: 1.2rem;
+    margin-right: 0.5rem;
+}
+#project-section {
+    height: inherit;
+    width: 20%;
+    padding: 1rem;
+    border: 2px solid var(--btcolor);
+    border-radius: 0.5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    justify-content: start;
+    gap: 0.5rem;
+}
+#project-section #project-form{
+    width: 100%;
+    background-color: var(--secondary);
+    padding: 0.5rem 1rem;
+    border: 1px solid var(--btcolor);
+    border-radius: 0.5rem;
+}
+#project-section .add-project-div{
+    cursor: pointer;
+    display: flex;
+}
+#project-section form {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: start;
+    gap: 0.5rem;
+    font-weight: 700;
+    padding-top: 0.5rem;
+}
+#project-section form div {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+#project-section form input {
+    width: 50%;
+    outline: none;
+    border-color: var(--btcolor);
+    border-radius: 0.5rem;
+    height: 1.5rem;
+}
+#project-section form select {
+    width: 50%;
+    outline: none;
+    border-color: var(--btcolor);
+    border-width: 2px;
+    border-radius: 0.5rem;
+    height: 1.5rem;
+}
+#project-section form button {
+    cursor: pointer;
+    width: 100%;
+    outline: none;
+    border-color: var(--btcolor);
+    padding-top: 0.2rem;
+    padding-bottom: 0.2rem;
+    border-radius: 0.5rem;
+    background-color: var(--btcolor);
+    font-weight: 700;
+}
+#project-section form button:hover {
+    background-color: var(--hovercolor);
+    color: var(--btcolor);
+}
+#project-section #project-list {
+    width: 100%;
+    padding: 0.5rem 0;
+}
+#project-section h1 {
+    margin-bottom: 1rem;
+}
+#project-section ul {
+    width: 100%;
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: start;
+    gap: 0.5rem;
+    font-size: 1rem;
+}
+#project-section li {
+    cursor: pointer;
+    width: 100%;
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.1rem 1rem;
+}
+#project-section li h4{
+    margin-right: auto;
+    text-transform: capitalize;
+}
+#project-section li h4:hover {
+    color: var(--hovercolor);
+}
+#project-section li span{
+    display: block;
+    width: 0.6rem;
+    height: 0.6rem;
+    border-radius: 50%;
+    border: 1px solid var(--txtcolor);
+}
+#project-section #project-list li i{
+    font-size: 0.8rem;
+}
+
+#todo-section {
+    height: inherit;
+    width: 78%;
+    padding: 1rem;
+    border: 2px solid var(--btcolor);
+    border-radius: 0.5rem;
+    position: relative;
+}
+
+#todo-section .add-todo-div{
+    position: absolute;
+    top: 0;
+    right: 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: var(--secondary);
+    padding: 0.5rem 1rem;
+    border: 1px solid var(--btcolor);
+    border-radius: 0.5rem;
+    cursor: pointer;
+    z-index: 3;
+}
+#todo-section  #todo-list{
+    position: relative;
+    padding: 0.5rem 1rem;
+    border: 1px solid var(--btcolor);
+    border-radius: 0.5rem;
+    background-color: var(--secondary);
+    height: inherit;
+}
+#todo-section h2::after {
+    top: -0.05rem;
+    right: -0.05rem;
+    position: absolute;
+    content: "";
+    width: 60%;
+    background-color: var(--bgcolor);
+    border-left: 1px solid var(--btcolor);
+    border-bottom: 1px solid var(--btcolor);
+    height: 3rem;
+}
+#todo-section h2{
+    margin-bottom: 2rem;
+    text-transform: capitalize;
+}
+.project-details {
+    display: flex;
+    justify-content: space-between;
+    align-items: start;
+    gap: 1rem;
+    height: inherit;
+}
+.drop-target {
+    height: 85%;
+    flex: 1;
+    background-color: var(--bgcolor);
+    border-radius: 0.5rem;
+    padding: 0;
+    border: 1px solid var(--hovercolor);
+    max-width:33%;
+}
+.drop-target h3 {
+    text-align: center;
+    padding: 0.5rem;
+    border-bottom: 1px solid var(--hovercolor);
+    background-color: var(--hovercolor);
+    border-top-left-radius: 0.5rem ;
+    border-top-right-radius: 0.5rem ;
+    color: var(--bgcolor);
+}
+#todo-section #todo-form {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 4;
+    background-color: rgba(200, 200, 200, 0.7);
+}
+#todo-section form {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: start;
+    gap: 1rem;
+    background-color: var(--bgcolor);
+    border: 2px solid var(--hovercolor);
+    width: 40%;
+    padding: 2rem;
+    font-weight: 700;
+}
+#todo-section form > div {
+    display: flex;
+    align-items: start;
+    justify-content: space-between;
+}
+#todo-section form input {
+    width: 50%;
+    outline: none;
+    border-color: var(--btcolor);
+    border-radius: 0.5rem;
+    height: 1.5rem;
+}
+#todo-section form select {
+    width: 50%;
+    outline: none;
+    border-color: var(--btcolor);
+    border-width: 2px;
+    border-radius: 0.5rem;
+    height: 1.5rem;
+}
+#todo-section form button {
+    cursor: pointer;
+    width: 100%;
+    outline: none;
+    border-color: var(--btcolor);
+    padding-top: 0.2rem;
+    padding-bottom: 0.2rem;
+    border-radius: 0.5rem;
+    background-color: var(--btcolor);
+    font-weight: 700;
+}
+#todo-section form button:hover {
+    background-color: var(--hovercolor);
+    color: var(--btcolor);
+}
+#todo-section .drop-target ul{
+    padding: 0.5rem;
+    list-style: none;
+}
+#todo-section .drop-target li {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    background-color: #aeacc2;
+    border: 1px solid var(--btcolor);
+    font-size: 0.8rem;
+    font-weight: 700;
+    cursor: pointer;
+    border-radius: 0.5rem;
+    padding: 0.5rem;
+    margin-bottom: 0.2rem;
+}
+#todo-section .drop-target i {
+    position: absolute;
+    right: 0.5rem;
+    bottom: 1rem;
+}
+#todo-section .drop-target p {
+    width: 80%;
+    overflow-wrap:break-word;
+    line-height: 1.5rem;
+}
