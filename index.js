@@ -85,6 +85,7 @@ function hideTodoForm(){
 function showTodoForm(){
     addTodoDiv.style.display = "none";
     todoForm.parentElement.style.display = "flex"
+    todoForm[0].focus()
 }
 function hideProjectForm(){
     addProjectDiv.style.display = "flex";
@@ -93,6 +94,7 @@ function hideProjectForm(){
 function showProjectForm(){
     addProjectDiv.style.display = "none";
     projectForm.style.display = "flex"
+    projectForm[0].focus()
 }
 
 function updateProjects() {
