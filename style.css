@@ -101,6 +101,7 @@ i {
 }
 #project-section h1 {
     margin-bottom: 1rem;
+    text-transform: uppercase;
 }
 #project-section ul {
     width: 100%;
@@ -296,4 +297,5 @@ i {
     width: 80%;
     overflow-wrap:break-word;
     line-height: 1.5rem;
+    text-transform: capitalize;
 }

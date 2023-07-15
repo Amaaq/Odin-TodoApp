@@ -13,44 +13,30 @@ let addProjectDiv = document.querySelector(".add-project-div")
 let projectForm = document.forms[0] 
 let todoForm = document.forms[1] 
 let dropTargets = document.querySelectorAll(".drop-target")
+let todoFormDiv = document.querySelector("#todo-form")
 
-dropTargets.forEach(dropTarget => {
-    dropTarget.addEventListener('dragenter', dragEnter,true)
-    dropTarget.addEventListener('dragover', dragOver,true);
-    dropTarget.addEventListener('dragleave', dragLeave,true);
-    dropTarget.addEventListener('drop', drop,true);
-});
-
-function dragEnter(e) {
-    e.preventDefault()
-}
-
-function dragOver(e) {
-    e.preventDefault()
-}
-
-function dragLeave(e) {
-}
-
-function drop(e) {
-    e.preventDefault()
-    e.stopPropagation()
-    let arr = e.dataTransfer.getData('text').split(",")
-    for(let project of projects){
-        if (project.name == arr[1]){
-            for(let todo of project.todos){
-                if (todo.id == Number(arr[0])){
-                    todo.status = e.target.lastElementChild.id
-                }
-            }
-            showTodos(project.name)
-        }
-    }
-}
 hideTodoForm()
 hideProjectForm()
 updateProjects()
 showTodos("separate")
+
+
+addTodoDiv.addEventListener("click",(e)=>{
+    showTodoForm()
+    hideProjectForm()
+})
+addProjectDiv.addEventListener("click",()=>{
+    showProjectForm()
+    hideTodoForm()
+})
+
+dropTargets.forEach(dropTarget => {
+    dropTarget.addEventListener('dragenter', dragEnter)
+    dropTarget.addEventListener('dragover', dragOver);
+    dropTarget.addEventListener('drop', drop);
+});
+
+
 todoForm[4].addEventListener("change",(e)=>{
     if(e.currentTarget.value == "new"){
         todoForm[5].disabled = false
@@ -82,7 +68,7 @@ todoForm[7].addEventListener("click",(e)=>{
     }else {
         addTodo(todoForm[0].value,todoForm[3].value,todoForm[1].value,todoForm[2].value,todoForm[4].value)
         updateProjects()
-        showTodos(todoForm[4].value.toLowerCase())
+        showTodos(todoForm[4].value.replace("-"," ").replace(",","'"))
     }
     todoForm.reset()
     todoForm[5].disabled = true
@@ -108,14 +94,6 @@ function showProjectForm(){
     addProjectDiv.style.display = "none";
     projectForm.style.display = "flex"
 }
-addTodoDiv.addEventListener("click",(e)=>{
-    showTodoForm()
-    hideProjectForm()
-})
-addProjectDiv.addEventListener("click",()=>{
-    showProjectForm()
-    hideTodoForm()
-})
 
 function updateProjects() {
     projectsList.textContent = ""
@@ -190,25 +168,52 @@ function showTodos(name){
 function updateOptions(){
     let str = ""
     for(let project of projects){
-        str +=`<option value='${project.name.toLowerCase().replace(" ","-")}'>${project.name.toUpperCase()}</option>`
+        str +=`<option value='${project.name.toLowerCase().replace(" ","-").replace("'",",")}'>${project.name.toUpperCase()}</option>`
     }
     str +='<option value="new" id="new-project">New Project</option>'
     options.innerHTML = str
 }
 
+function dragEnter(e) {
+    e.preventDefault()
+}
+
+function dragOver(e) {
+    e.preventDefault()
+}
+
+function drop(e) {
+    e.preventDefault()
+    let arr = e.dataTransfer.getData('text').split(",")
+    for(let project of projects){
+        if (project.name == arr[1]){
+            for(let todo of project.todos){
+                if (todo.id == Number(arr[0])){
+                    let element = e.target
+                    while(element.classList[0] !="drop-target"){
+                        element = element.parentElement
+                    }
+                    todo.status = element.lastElementChild.id
+                }
+            }
+            showTodos(project.name)
+        }
+    }
+}
+
 function Project(name,color){
-    this.name = name;
+    this.name = name.toLowerCase();
     this.color = color;
     this.todos = []
 }
 function Todo(title,description,dueDate,priority,projectTitle){
     this.id = Date.now()
-    this.title = title;
+    this.title = title.toLowerCase();
     this.description = description;
     this.dueDate = dueDate;
     this.priority = priority;
     this.status = "to-do";
-    this.projectTitle = projectTitle;
+    this.projectTitle = projectTitle.toLowerCase();
 }
 
 
@@ -219,7 +224,7 @@ function addProject(name,color){
 function deleteProject(name){
     let i=0;
     for (let project of projects){
-        if(project.name == name){
+        if(project.name == name.toLowerCase()){
             projects.splice(i,1)
         }
         i++
@@ -228,7 +233,7 @@ function deleteProject(name){
 
 function addTodo(title,description,dueDate,priority,projectTitle){
     for(let project of projects){
-        if(project.name == projectTitle){
+        if(project.name == projectTitle.toLowerCase()){
             project.todos.push(new Todo(title,description,dueDate,priority,projectTitle))
         }
     }
