@@ -200,7 +200,7 @@ i {
     border-radius: 0.5rem;
     padding: 0;
     border: 1px solid var(--hovercolor);
-    max-width:33%;
+    width:33%;
 }
 .drop-target h3 {
     text-align: center;
@@ -275,10 +275,7 @@ i {
     list-style: none;
 }
 #todo-section .drop-target li {
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
+    display: block;
     background-color: #aeacc2;
     border: 1px solid var(--btcolor);
     font-size: 0.8rem;
@@ -289,13 +286,20 @@ i {
     margin-bottom: 0.2rem;
 }
 #todo-section .drop-target i {
-    position: absolute;
-    right: 0.5rem;
-    bottom: 1rem;
+    margin-top: 0.2rem;
+    float: right;
 }
 #todo-section .drop-target p {
-    width: 80%;
     overflow-wrap:break-word;
     line-height: 1.5rem;
     text-transform: capitalize;
+}
+.information {
+    display: none;
+    overflow-wrap:break-word;
+    margin-top: 0.5rem;
+}
+.displayed {
+    display: block;
+    object-fit: contain;
 }

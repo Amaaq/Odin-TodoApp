@@ -130,24 +130,56 @@ function showTodos(name){
     for(let project of projects){
         if(project.name == name){
             for(let todo of project.todos){
+
                 let li = document.createElement("li")
+                let p = document.createElement("p")
+                let span = document.createElement("span")
+                let del = document.createElement('i')
+                let info = document.createElement('i')
+                let information = document.createElement('div')
+                
+                
+
                 li.setAttribute("draggable","true")
                 li.addEventListener("dragstart",(e)=>{
                     e.dataTransfer.setData('text',[todo.id,project.name])
                 })
-                let p = document.createElement("p")
-                let span = document.createElement("span")
-                let icon = document.createElement('i')
+
                 p.textContent = todo.title
+
                 span.textContent = todo.dueDate
-                icon.setAttribute("class","fa-solid fa-trash-can")
-                icon.addEventListener("click",()=>{
+
+                del.setAttribute("class","fa-solid fa-trash-can")
+                del.addEventListener("click",()=>{
                     deleteTodo(todo.id)
                     showTodos(name)
                 })
+
+
+                information.textContent = todo.description
+                information.setAttribute("class","information")
+                info.setAttribute("class","fa-solid fa-circle-info")
+                info.addEventListener("click",function(){
+                    let informationDivs = document.querySelectorAll(".information");
+                    if(information.classList.contains("displayed")){
+                        information.classList.remove("displayed")
+                    }else {
+                        informationDivs.forEach(infoDiv=>{
+                            if(infoDiv.classList.contains("displayed")){
+                                infoDiv.classList.remove("displayed")
+                            }
+                        })
+                        information.classList.add("displayed")
+
+                    }
+                })
+
+
+                li.appendChild(del)
+                li.appendChild(info)
                 li.appendChild(p)
                 li.appendChild(span)
-                li.appendChild(icon)
+                li.appendChild(information)
                 switch (todo.status){
                     case "to-do" : {
                         todoStatus.appendChild(li);
