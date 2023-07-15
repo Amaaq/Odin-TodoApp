@@ -193,7 +193,7 @@ function drop(e) {
                     while(element.classList[0] !="drop-target"){
                         element = element.parentElement
                     }
-                    todo.status = element.lastElementChild.id
+                    todo.status = element.lastElementChild.id;
                 }
             }
             showTodos(project.name)
