@@ -14,7 +14,7 @@
     color: var(--txtcolor);
 }
 body {
-    height: 100vh;
+    min-height: 100vh;
     background-color: var(--bgcolor);
 }
 main {
@@ -22,14 +22,14 @@ main {
     align-items: stretch;
     justify-content: space-between;
     padding: 2rem;
-    height: 100%;
+    min-height: 100vh;
 }
 i {
     font-size: 1.2rem;
     margin-right: 0.5rem;
 }
 #project-section {
-    height: inherit;
+    min-height: 100%;
     width: 20%;
     padding: 1rem;
     border: 2px solid var(--btcolor);
@@ -141,7 +141,7 @@ i {
 }
 
 #todo-section {
-    height: inherit;
+    min-height: 100%;
     width: 78%;
     padding: 1rem;
     border: 2px solid var(--btcolor);
@@ -169,7 +169,7 @@ i {
     border: 1px solid var(--btcolor);
     border-radius: 0.5rem;
     background-color: var(--secondary);
-    height: inherit;
+    min-height: 100%;
 }
 #todo-section h2::after {
     top: -0.05rem;
@@ -191,10 +191,10 @@ i {
     justify-content: space-between;
     align-items: start;
     gap: 1rem;
-    height: inherit;
+    min-height: 100% ;
 }
 .drop-target {
-    height: 85%;
+    min-height: 70vh;
     flex: 1;
     background-color: var(--bgcolor);
     border-radius: 0.5rem;
@@ -271,6 +271,7 @@ i {
     color: var(--btcolor);
 }
 #todo-section .drop-target ul{
+    min-height: 100%;
     padding: 0.5rem;
     list-style: none;
 }
