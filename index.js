@@ -1,6 +1,7 @@
 // Variables for Todo functions
 // import {projects,addTodo,addProject,deleteTodo,deleteProject} from './module'
-let projects = [new Project("separate",'black')]
+
+let projects = JSON.parse(localStorage.getItem("projectStorage")) || [new Project("separate",'black')] 
 //Variables for Dom Manupilation
 let todoStatus = document.querySelector('#to-do')
 let inProgress = document.querySelector('#in-progress')
@@ -19,6 +20,7 @@ hideTodoForm()
 hideProjectForm()
 updateProjects()
 showTodos("separate")
+updateOptions()
 
 
 addTodoDiv.addEventListener("click",(e)=>{
@@ -213,9 +215,6 @@ function showTodos(name){
     }
 }
 
-function showError(){
-    todoForm
-}
 function updateOptions(){
     let str = ""
     for(let project of projects){
@@ -270,6 +269,7 @@ function Todo(title,description,dueDate,priority,projectTitle){
 
 function addProject(name,color){
     projects.push(new Project(name,color))
+    localStorage.setItem("projectStorage",JSON.stringify(projects))
 }
 
 function deleteProject(name){
@@ -280,6 +280,7 @@ function deleteProject(name){
         }
         i++
     }
+    localStorage.setItem("projectStorage",JSON.stringify(projects))
 }
 
 function addTodo(title,description,dueDate,priority,projectTitle){
@@ -288,6 +289,7 @@ function addTodo(title,description,dueDate,priority,projectTitle){
             project.todos.push(new Todo(title,description,dueDate,priority,projectTitle))
         }
     }
+    localStorage.setItem("projectStorage",JSON.stringify(projects))
 }
 function deleteTodo(id){
     for(let project of projects){
@@ -299,6 +301,7 @@ function deleteTodo(id){
             i++
         }
     }
+    localStorage.setItem("projectStorage",JSON.stringify(projects))
 }
 
 
