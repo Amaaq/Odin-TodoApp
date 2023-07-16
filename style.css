@@ -277,7 +277,6 @@ i {
 }
 #todo-section .drop-target li {
     display: block;
-    background-color: var(--btcolor);
     border: 1px solid var(--hovercolor);
     font-size: 0.8rem;
     font-weight: 700;
@@ -286,6 +285,16 @@ i {
     padding: 0.5rem;
     margin-bottom: 0.2rem;
 }
+#todo-section .drop-target:first-child li{
+    background-color: var(--btcolor);
+} 
+#todo-section .drop-target:nth-child(2) li{
+    background-color: #fcf81d;
+
+} 
+#todo-section .drop-target:last-child li{
+    background-color: rgb(21, 247, 70);
+} 
 #todo-section .drop-target i {
     margin-top: 0.2rem;
     float: right;

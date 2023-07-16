@@ -250,6 +250,7 @@ function drop(e) {
             showTodos(project.id)
         }
     }
+    localStorage.setItem("projectStorage",JSON.stringify(projects))
 }
 
 function Project(name,color){
