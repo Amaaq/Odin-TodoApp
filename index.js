@@ -235,8 +235,9 @@ function dragOver(e) {
 function drop(e) {
     e.preventDefault()
     let arr = e.dataTransfer.getData('text').split(",")
+    console.log(arr)
     for(let project of projects){
-        if (project.name == arr[1]){
+        if (project.id == Number(arr[1])){
             for(let todo of project.todos){
                 if (todo.id == Number(arr[0])){
                     let element = e.target
@@ -246,7 +247,7 @@ function drop(e) {
                     todo.status = element.lastElementChild.id;
                 }
             }
-            showTodos(project.name)
+            showTodos(project.id)
         }
     }
 }
