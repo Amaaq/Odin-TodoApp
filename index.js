@@ -19,7 +19,7 @@ let todoFormDiv = document.querySelector("#todo-form")
 hideTodoForm()
 hideProjectForm()
 updateProjects()
-showTodos("separate")
+showTodos(projects.find((element=>element.name == "separate")).id)
 updateOptions()
 
 
@@ -58,10 +58,10 @@ projectForm[2].addEventListener("click",(e)=>{
         projectForm[0].style.borderColor = "red"
     }else {
         addProject(projectForm[0].value,projectForm[1].value)
+        projectForm.reset()
         hideProjectForm()
         updateProjects()
         updateOptions()
-
     }
     
 })
@@ -76,11 +76,11 @@ todoForm[7].addEventListener("click",(e)=>{
             addProject(todoForm[5].value,todoForm[6].value)
             addTodo(todoForm[0].value,todoForm[3].value!="" ? todoForm[3].value : "NO DESCRIPTION AVAILABLE" ,todoForm[1].value!="" ? todoForm[1].value : "No due Date",todoForm[2].value,todoForm[5].value)
             updateProjects()
-            showTodos(todoForm[5].value.toLowerCase())
+            showTodos(projects[projects.length-1].id)
         }else {
             addTodo(todoForm[0].value,todoForm[3].value!="" ? todoForm[3].value : "NO DESCRIPTION AVAILABLE" ,todoForm[1].value!="" ? todoForm[1].value : "No due Date",todoForm[2].value,todoForm[4].value)
             updateProjects()
-            showTodos(todoForm[4].value.replace("-"," ").replace(",","'"))
+            showTodos(projects.find((element=>element.name == todoForm[4].value)).id)
         }
         todoForm.reset()
         todoForm[5].disabled = true
@@ -98,8 +98,8 @@ function hideTodoForm(){
 function showTodoForm(){
     addTodoDiv.style.display = "none";
     todoForm.parentElement.style.display = "flex"
-    todoForm[0].style.borderColor = "#a4ebf3"
-    todoForm[5].style.borderColor = "#a4ebf3"
+    todoForm[0].style.borderColor = "var(--btcolor)"
+    todoForm[5].style.borderColor = "var(--btcolor)"
     todoForm[0].focus()
 }
 function hideProjectForm(){
@@ -109,7 +109,7 @@ function hideProjectForm(){
 function showProjectForm(){
     addProjectDiv.style.display = "none";
     projectForm.style.display = "flex"
-    projectForm[0].style.borderColor = "#a4ebf3"
+    projectForm[0].style.borderColor = "var(--btcolor)"
     projectForm[0].focus()
 }
 
@@ -122,12 +122,12 @@ for (let i=0 ; i<projects.length ; i++){
     let icon = document.createElement('i')
     h4.textContent = projects[i].name 
     h4.addEventListener("click",()=>{
-        showTodos(projects[i].name)
+        showTodos(projects[i].id)
     })
     span.style.backgroundColor = projects[i].color
     icon.setAttribute("class","fa-solid fa-trash-can")
     icon.addEventListener("click",()=>{
-        deleteProject(projects[i].name)
+        deleteProject(projects[i].id)
         updateProjects()
         showTodos("separate")
     })
@@ -138,13 +138,13 @@ for (let i=0 ; i<projects.length ; i++){
 }
 }
 
-function showTodos(name){
-    h2.textContent = name
+function showTodos(id){
     todoStatus.textContent = ""
     inProgress.textContent = ""
     done.textContent = ""
     for(let project of projects){
-        if(project.name == name){
+        if(project.id == id){
+            h2.textContent = project.name
             for(let todo of project.todos){
 
                 let li = document.createElement("li")
@@ -158,7 +158,7 @@ function showTodos(name){
 
                 li.setAttribute("draggable","true")
                 li.addEventListener("dragstart",(e)=>{
-                    e.dataTransfer.setData('text',[todo.id,project.name])
+                    e.dataTransfer.setData('text',[todo.id,project.id])
                 })
 
                 p.textContent = todo.title
@@ -168,7 +168,7 @@ function showTodos(name){
                 del.setAttribute("class","fa-solid fa-trash-can")
                 del.addEventListener("click",()=>{
                     deleteTodo(todo.id)
-                    showTodos(name)
+                    showTodos(id)
                 })
 
 
@@ -252,6 +252,7 @@ function drop(e) {
 }
 
 function Project(name,color){
+    this.id = Date.now()
     this.name = name.toLowerCase();
     this.color = color;
     this.todos = []
@@ -272,10 +273,10 @@ function addProject(name,color){
     localStorage.setItem("projectStorage",JSON.stringify(projects))
 }
 
-function deleteProject(name){
+function deleteProject(id){
     let i=0;
     for (let project of projects){
-        if(project.name == name.toLowerCase()){
+        if(project.id == id){
             projects.splice(i,1)
         }
         i++
