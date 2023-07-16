@@ -4,8 +4,8 @@
     --btcolor: #a4ebf3;
     --secondary: #ccf2f4;
     --txtcolor: #454545;
-    --progress: #7ec9d1;
-    --done: #4b9da7;
+    --primarybg: #7ec9d1;
+    --secondarybg: #95cff1;
 }
 * {
     padding: 0;
@@ -206,10 +206,10 @@ i {
     text-align: center;
     padding: 0.5rem;
     border-bottom: 1px solid var(--hovercolor);
-    background-color: var(--hovercolor);
+    background-color: var(--secondarybg);
     border-top-left-radius: 0.5rem ;
     border-top-right-radius: 0.5rem ;
-    color: var(--bgcolor);
+    color: var(--txtcolor);
 }
 #todo-section #todo-form {
     position: fixed;
@@ -277,8 +277,8 @@ i {
 }
 #todo-section .drop-target li {
     display: block;
-    background-color: #aeacc2;
-    border: 1px solid var(--btcolor);
+    background-color: var(--btcolor);
+    border: 1px solid var(--hovercolor);
     font-size: 0.8rem;
     font-weight: 700;
     cursor: pointer;
@@ -303,4 +303,11 @@ i {
 .displayed {
     display: block;
     object-fit: contain;
+}
+textarea {
+    width: 50%;
+    outline: none;
+    border-color: var(--btcolor);
+    border-radius: 0.5rem;
+    resize: none;
 }
