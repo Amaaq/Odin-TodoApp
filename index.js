@@ -52,29 +52,40 @@ projectForm[3].addEventListener("click",hideProjectForm)
 
 projectForm[2].addEventListener("click",(e)=>{
     e.preventDefault()
-    addProject(projectForm[0].value,projectForm[1].value)
-    hideProjectForm()
-    updateProjects()
-    updateOptions()
+    if(projectForm[0].value == ""){
+        projectForm[0].style.borderColor = "red"
+    }else {
+        addProject(projectForm[0].value,projectForm[1].value)
+        hideProjectForm()
+        updateProjects()
+        updateOptions()
+
+    }
     
 })
 todoForm[7].addEventListener("click",(e)=>{
     e.preventDefault()
-    if(todoForm[4].value == "new" && todoForm[5].value != ""){
-        addProject(todoForm[5].value,todoForm[6].value)
-        addTodo(todoForm[0].value,todoForm[3].value,todoForm[1].value,todoForm[2].value,todoForm[5].value)
-        updateProjects()
-        showTodos(todoForm[5].value.toLowerCase())
+    if(todoForm[0].value == ""){
+        todoForm[0].style.borderColor = "red"
+    }else if(todoForm[4].value == "new" && todoForm[5].value == "") {
+        todoForm[5].style.borderColor = "red"
     }else {
-        addTodo(todoForm[0].value,todoForm[3].value,todoForm[1].value,todoForm[2].value,todoForm[4].value)
-        updateProjects()
-        showTodos(todoForm[4].value.replace("-"," ").replace(",","'"))
+        if(todoForm[4].value == "new" && todoForm[5].value != ""){
+            addProject(todoForm[5].value,todoForm[6].value)
+            addTodo(todoForm[0].value,todoForm[3].value!="" ? todoForm[3].value : "NO DESCRIPTION AVAILABLE" ,todoForm[1].value!="" ? todoForm[1].value : "No due Date",todoForm[2].value,todoForm[5].value)
+            updateProjects()
+            showTodos(todoForm[5].value.toLowerCase())
+        }else {
+            addTodo(todoForm[0].value,todoForm[3].value!="" ? todoForm[3].value : "NO DESCRIPTION AVAILABLE" ,todoForm[1].value!="" ? todoForm[1].value : "No due Date",todoForm[2].value,todoForm[4].value)
+            updateProjects()
+            showTodos(todoForm[4].value.replace("-"," ").replace(",","'"))
+        }
+        todoForm.reset()
+        todoForm[5].disabled = true
+        todoForm[6].disabled = true
+        hideTodoForm()
+        updateOptions()
     }
-    todoForm.reset()
-    todoForm[5].disabled = true
-    todoForm[6].disabled = true
-    hideTodoForm()
-    updateOptions()
 })
 
 
@@ -85,6 +96,8 @@ function hideTodoForm(){
 function showTodoForm(){
     addTodoDiv.style.display = "none";
     todoForm.parentElement.style.display = "flex"
+    todoForm[0].style.borderColor = "#a4ebf3"
+    todoForm[5].style.borderColor = "#a4ebf3"
     todoForm[0].focus()
 }
 function hideProjectForm(){
@@ -94,6 +107,7 @@ function hideProjectForm(){
 function showProjectForm(){
     addProjectDiv.style.display = "none";
     projectForm.style.display = "flex"
+    projectForm[0].style.borderColor = "#a4ebf3"
     projectForm[0].focus()
 }
 
@@ -199,6 +213,9 @@ function showTodos(name){
     }
 }
 
+function showError(){
+    todoForm
+}
 function updateOptions(){
     let str = ""
     for(let project of projects){
