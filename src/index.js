@@ -1,8 +1,6 @@
 
 import {projects,addTodo,addProject,deleteTodo,deleteProject} from './app'
-// import { initializeApp } from "firebase/app";
-// import { getAuth, createUserWithEmailAndPassword ,signInWithEmailAndPassword} from "firebase/auth";
-// import { connectAuthEmulator } from "firebase/auth";
+
 
 
 let todoStatus = document.querySelector('#to-do')
@@ -16,57 +14,9 @@ let addProjectDiv = document.querySelector(".add-project-div")
 let projectForm = document.querySelector('#form1')
 let todoForm = document.querySelector('#form2')
 let dropTargets = document.querySelectorAll(".drop-target")
-let signInSubmit = document.querySelector('#sign-in-button')
-let signUpSubmit = document.querySelector('#sign-up-button')
-let signInForm = document.querySelector('#sign-in-form')
-let signUpForm = document.querySelector('#sign-up-form')
 
-// const firebaseConfig = {
-//     apiKey: "AIzaSyCYNaTdvRzTxmDMZlc_Qrl95ULlsYcPX9k",
-//     authDomain: "todoappadil.firebaseapp.com",
-//     projectId: "todoappadil",
-//     storageBucket: "todoappadil.appspot.com",
-//     messagingSenderId: "343612051830",
-//     appId: "1:343612051830:web:40c5b6752b92d248ca6a57"
-//   };
-//   const app = initializeApp(firebaseConfig);
-//   const auth = getAuth();
 
-// signUpSubmit.addEventListener('click',(e)=>{
-//     e.preventDefault()
-//     console.log('sign up clicked')
-//     const email = signUpForm[0].value;
-//     const password = signUpForm[1].value;
-//     createUserWithEmailAndPassword(auth, email, password)
-//       .then((userCredential) => {
-//         const user = userCredential.user;
-//         console.log(user)
-//       })
-//       .catch((error) => {
-//         const errorCode = error.code;
-//         const errorMessage = error.message;
-//         console.log(errorCode)
-//           console.log(errorMessage)
-    
-//       });
-// })
 
-// signInSubmit.addEventListener('click',(e)=>{
-//     e.preventDefault()
-//     console.log('sign up clicked')
-//     signInWithEmailAndPassword(auth, signInForm[0].value, signInForm[1].value)
-//         .then((userCredential) => {
-//             const user = userCredential.user;
-//             console.log(user)
-//         })
-//         .catch((error) => {
-//           const errorCode = error.code;
-//           const errorMessage = error.message;
-//           console.log(errorCode)
-//           console.log(errorMessage)
-//         });
-    
-// }) 
 
 hideTodoForm()
 hideProjectForm()
