@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="container">
+        <div>
+            <div id="login-div">
+                LOG IN
+            </div>
+            <div id="signup-div">
+                SIGN UP
+            </div>
+        </div>
+        <form id="sign-in-form" style="display: none;">
+            <legend> LOG IN</legend>
+            <div>
+                <label for="sign-in-username">Username :</label>
+                <input type="text" id="sign-in-username" name="sign-in-username">
+            </div>
+            <div>
+                <label for="sign-in-password">Password :</label>
+                <input type="password" id="sign-in-password" name="sign-in-password">
+            </div>
+            <button type="submit" id="sign-in-button">Log In</button>
+            <button id="sign-in-cancel"> Cancel </button>
+        </form>
+        <form id="sign-up-form" style="display: none;">
+            <legend>SIGN UP</legend>
+            <div>
+                <label for="sign-up-username">Username :</label>
+                <input type="text" id="sign-up-username" name="sign-up-username">
+            </div>
+            <div>
+                <label for="sign-up-password">Password :</label>
+                <input type="password" id="sign-up-password" name="sign-up-password">
+            </div>
+            <button type="submit" id="sign-up-button">Sign Up</button>
+            <button id="sign-up-cancel"> Cancel </button>
+        </form>
+</div>
+    <script src="login.main.js"></script>
+</body>
+</html>
