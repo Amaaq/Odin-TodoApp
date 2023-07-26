@@ -5,12 +5,13 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title></title>
+    <title>TODOS</title>
     <link rel="stylesheet" href="style.css">
     <script src="https://kit.fontawesome.com/2bc5ce8282.js" crossorigin="anonymous"></script>
 </head>
 
 <body>
+    <button id="log-out">LOG OUT</button>
     <main>
         <section id="project-section">
             <div id="project-form">
@@ -38,7 +39,9 @@
         </div>
         <div id="project-list">
             <h1><i class="fa-solid fa-folder-tree"></i> Projects</h1>
-            <ul id="projects"></ul>
+            <ul id="projects">
+                <img src="loading.gif">
+            </ul>
         </div>
     </section>
     <section id="todo-section">
@@ -111,7 +114,7 @@
         </div>
     </section>
     </main>
-    <script src="todo.main.js"></script>
+    <script src="main.js"></script>
 
 </body>
 
