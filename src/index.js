@@ -1,5 +1,8 @@
-
-import {projects,addTodo,addProject,deleteTodo,deleteProject} from './app'
+import {db,projects,addTodo,addProject,deleteTodo,deleteProject} from './app'
+import {signOut} from 'firebase/auth'
+import {auth} from './app'
+import {collection, query, where, getDocs, updateDoc} from "firebase/firestore";
+export {updateDataBase}
 
 
 
@@ -14,83 +17,106 @@ let addProjectDiv = document.querySelector(".add-project-div")
 let projectForm = document.querySelector('#form1')
 let todoForm = document.querySelector('#form2')
 let dropTargets = document.querySelectorAll(".drop-target")
+let logOut = document.querySelector('#log-out')
+let uid
 
 
 
 
-hideTodoForm()
-hideProjectForm()
-updateProjects()
-showTodos(projects.find((element=>element.name == "separate")).id)
-updateOptions()
-
-
-addTodoDiv.addEventListener("click",(e)=>{
-    showTodoForm()
-    hideProjectForm()
-})
-addProjectDiv.addEventListener("click",()=>{
-    showProjectForm()
-    hideTodoForm()
-})
-
-dropTargets.forEach(dropTarget => {
-    dropTarget.addEventListener('dragenter', dragEnter)
-    dropTarget.addEventListener('dragover', dragOver);
-    dropTarget.addEventListener('drop', drop);
-});
-
-
-todoForm[4].addEventListener("change",(e)=>{
-    if(e.currentTarget.value == "new"){
-        todoForm[5].disabled = false
-        todoForm[6].disabled = false
-    }else{
-        todoForm[5].disabled = true
-        todoForm[6].disabled = true
-    }
-});
-todoForm[8].addEventListener("click",hideTodoForm)
-
-projectForm[3].addEventListener("click",hideProjectForm)
-
-projectForm[2].addEventListener("click",(e)=>{
-    e.preventDefault()
-    if(projectForm[0].value == ""){
-        projectForm[0].style.borderColor = "red"
-    }else {
-        addProject(projectForm[0].value,projectForm[1].value)
-        projectForm.reset()
-        hideProjectForm()
-        updateProjects()
-        updateOptions()
-    }
-    
-})
-todoForm[7].addEventListener("click",(e)=>{
-    e.preventDefault()
-    if(todoForm[0].value == ""){
-        todoForm[0].style.borderColor = "red"
-    }else if(todoForm[4].value == "new" && todoForm[5].value == "") {
-        todoForm[5].style.borderColor = "red"
-    }else {
-        if(todoForm[4].value == "new" && todoForm[5].value != ""){
-            addProject(todoForm[5].value,todoForm[6].value)
-            addTodo(todoForm[0].value,todoForm[3].value!="" ? todoForm[3].value : "NO DESCRIPTION AVAILABLE" ,todoForm[1].value!="" ? todoForm[1].value : "No due Date",todoForm[2].value,todoForm[5].value)
-            updateProjects()
-            showTodos(projects[projects.length-1].id)
-        }else {
-            addTodo(todoForm[0].value,todoForm[3].value!="" ? todoForm[3].value : "NO DESCRIPTION AVAILABLE" ,todoForm[1].value!="" ? todoForm[1].value : "No due Date",todoForm[2].value,todoForm[4].value)
-            updateProjects()
-            showTodos(projects.find((element=>element.name == todoForm[4].value)).id)
-        }
-        todoForm.reset()
-        todoForm[5].disabled = true
-        todoForm[6].disabled = true
+document.addEventListener('DOMContentLoaded',()=>{
+    if(projectsList != null){
+        auth.onAuthStateChanged((user)=>{
+            getDataBase(user).then((res)=>{
+                if(res){
+                projects.splice(0,projects.length,...res)
+                }
+                updateProjects()
+                updateOptions()
+                
+            }).catch(function(error){
+                return
+            })
+        })
+        window.addEventListener('beforeunload',()=>{
+            signOut(auth)
+        })
+        showTodos(projects.find(element=>element.name == "separate").id)
         hideTodoForm()
-        updateOptions()
+        hideProjectForm()
+        logOut.addEventListener('click',()=>{
+            signOut(auth);
+            window.open('./index.html','_self')
+        })
+        addTodoDiv.addEventListener("click",(e)=>{
+            showTodoForm()
+            hideProjectForm()
+        })
+        addProjectDiv.addEventListener("click",()=>{
+            showProjectForm()
+            hideTodoForm()
+        })
+        
+        dropTargets.forEach(dropTarget => {
+            dropTarget.addEventListener('dragenter', dragEnter)
+            dropTarget.addEventListener('dragover', dragOver);
+            dropTarget.addEventListener('drop', drop);
+        });
+        
+        
+        todoForm[4].addEventListener("change",(e)=>{
+            if(e.currentTarget.value == "new"){
+                todoForm[5].disabled = false
+                todoForm[6].disabled = false
+            }else{
+                todoForm[5].disabled = true
+                todoForm[6].disabled = true
+            }
+        });
+        todoForm[8].addEventListener("click",hideTodoForm)
+        
+        projectForm[3].addEventListener("click",hideProjectForm)
+        
+        projectForm[2].addEventListener("click",(e)=>{
+            e.preventDefault()
+            if(projectForm[0].value == ""){
+                projectForm[0].style.borderColor = "red"
+            }else {
+                addProject(projectForm[0].value,projectForm[1].value)
+                projectForm.reset()
+                hideProjectForm()
+                updateProjects()
+                updateOptions()
+               
+            }
+            
+        })
+        todoForm[7].addEventListener("click",(e)=>{
+            e.preventDefault()
+            if(todoForm[0].value == ""){
+                todoForm[0].style.borderColor = "red"
+            }else if(todoForm[4].value == "new" && todoForm[5].value == "") {
+                todoForm[5].style.borderColor = "red"
+            }else {
+                if(todoForm[4].value == "new" && todoForm[5].value != ""){
+                    addProject(todoForm[5].value,todoForm[6].value)
+                    addTodo(todoForm[0].value,todoForm[3].value!="" ? todoForm[3].value : "NO DESCRIPTION AVAILABLE" ,todoForm[1].value!="" ? todoForm[1].value : "No due Date",todoForm[2].value,todoForm[5].value)
+                    updateProjects()
+                    showTodos(projects[projects.length-1].id)
+                }else {
+                    addTodo(todoForm[0].value,todoForm[3].value!="" ? todoForm[3].value : "NO DESCRIPTION AVAILABLE" ,todoForm[1].value!="" ? todoForm[1].value : "No due Date",todoForm[2].value,todoForm[4].value)
+                    updateProjects()
+                    showTodos(projects.find((element=>element.name == todoForm[4].value.toLowerCase().replace('-',' '))).id)
+                }
+                todoForm.reset()
+                todoForm[5].disabled = true
+                todoForm[6].disabled = true
+                hideTodoForm()
+                updateOptions()
+            }
+        })
     }
 })
+
 
 
 function hideTodoForm(){
@@ -251,9 +277,35 @@ function drop(e) {
             showTodos(project.id)
         }
     }
-    localStorage.setItem("projectStorage",JSON.stringify(projects))
+    updateDataBase()
+ 
 }
 
+async function updateDataBase(){
+    const q = query(collection(db, "users"),where("userId", "==", uid));
+            const  querySnapshot = await getDocs(q);
+            querySnapshot.forEach((doc) => {           
+                updateDoc(doc.ref,{projects:JSON.stringify(projects)});
+            })
+        }
+
+async function getDataBase(user) {
+    if (user) {
+        uid = auth.currentUser.uid
+        const q = query(collection(db, "users"),where("userId", "==", user.uid));
+        const  querySnapshot = await getDocs(q);
+        let promise1 =new Promise((resolve,reject)=>{
+            querySnapshot.forEach((doc) => {
+                if(doc.data().projects != ""){
+                    resolve(JSON.parse(doc.data().projects))
+                }else {
+                    reject()
+                }
+            })
+        })
+        return promise1 
+    } 
+}
 
 
 

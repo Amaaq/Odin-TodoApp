@@ -1,11 +1,24 @@
+import { getAuth } from 'firebase/auth'
+export {db,auth,projects,addTodo,addProject,deleteTodo,deleteProject}
+import { initializeApp } from "firebase/app";
+import { getFirestore} from "firebase/firestore";
+import { updateDataBase} from './index'
 
 
-export {projects,addTodo,addProject,deleteTodo,deleteProject}
 
+const firebaseConfig = {
+    apiKey: "AIzaSyCYNaTdvRzTxmDMZlc_Qrl95ULlsYcPX9k",
+    authDomain: "todoappadil.firebaseapp.com",
+    projectId: "todoappadil",
+    storageBucket: "todoappadil.appspot.com",
+    messagingSenderId: "343612051830",
+    appId: "1:343612051830:web:40c5b6752b92d248ca6a57"
+  };
+  const app = initializeApp(firebaseConfig);
+  let auth = getAuth()
+  const db = getFirestore(app);
+  let projects = [new Project("separate","black")]
 
-
-
-let projects = JSON.parse(localStorage.getItem("projectStorage")) || [new Project("separate",'black')] 
 
 
 function Project(name,color){
@@ -21,13 +34,14 @@ function Todo(title,description,dueDate,priority,projectTitle){
     this.dueDate = dueDate;
     this.priority = priority;
     this.status = "to-do";
-    this.projectTitle = projectTitle.toLowerCase();
+    this.projectTitle = projectTitle.toLowerCase().replace('-',' ');
 }
 
 
 function addProject(name,color){
     projects.push(new Project(name,color))
-    localStorage.setItem("projectStorage",JSON.stringify(projects))
+    updateDataBase()
+
 }
 
 function deleteProject(id){
@@ -38,16 +52,16 @@ function deleteProject(id){
         }
         i++
     }
-    localStorage.setItem("projectStorage",JSON.stringify(projects))
+    updateDataBase()
 }
 
 function addTodo(title,description,dueDate,priority,projectTitle){
     for(let project of projects){
-        if(project.name == projectTitle.toLowerCase()){
+        if(project.name == projectTitle.toLowerCase().replace('-',' ')){
             project.todos.push(new Todo(title,description,dueDate,priority,projectTitle))
         }
     }
-    localStorage.setItem("projectStorage",JSON.stringify(projects))
+    updateDataBase()
 }
 function deleteTodo(id){
     for(let project of projects){
@@ -59,5 +73,4 @@ function deleteTodo(id){
             i++
         }
     }
-    localStorage.setItem("projectStorage",JSON.stringify(projects))
 }
