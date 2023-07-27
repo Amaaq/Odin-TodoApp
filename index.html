@@ -7,20 +7,12 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
- 
-    <div id="container">
-        <div>
-            <div id="login-div">
-                LOG IN
-            </div>
-            <div id="signup-div">
-                SIGN UP
-            </div>
-        </div>
-        <form id="sign-in-form" style="display: none;">
-            <legend> LOG IN</legend>
+    <header>
+        <div id="logo"><img src="logo.jpg"> By Amaaq</div>
+        <form id="sign-in-form">
+            <p id="sign-in-error" class="error"></p>
             <div>
-                <label for="sign-in-username">Username :</label>
+                <label for="sign-in-username">Email :</label>
                 <input type="text" id="sign-in-username" name="sign-in-username">
             </div>
             <div>
@@ -28,22 +20,33 @@
                 <input type="password" id="sign-in-password" name="sign-in-password">
             </div>
             <button type="submit" id="sign-in-button">Log In</button>
-            <button id="sign-in-cancel"> Cancel </button>
+            <button id="signup-div">
+                Sign Up
+            </button>
         </form>
-        <form id="sign-up-form" style="display: none;">
+    </header>
+    <div id="container">
+        <form id="sign-up-form">
             <legend>SIGN UP</legend>
             <div>
-                <label for="sign-up-username">Username :</label>
+                <label for="sign-up-username">Email :</label>
                 <input type="text" id="sign-up-username" name="sign-up-username">
             </div>
             <div>
                 <label for="sign-up-password">Password :</label>
                 <input type="password" id="sign-up-password" name="sign-up-password">
             </div>
+            <p id="sign-up-error" class="error"></p>
             <button type="submit" id="sign-up-button">Sign Up</button>
             <button id="sign-up-cancel"> Cancel </button>
         </form>
-</div>
+        <div id="sign-up-success">
+            <h1>congratulations !!!</h1>
+            <h3>Your account has been created successfully !</h3>
+            <h4> You can login now using your email</h4>
+            <button id="login-success"> click here to go to home page</button>
+        </div>
+    </div>
     <script src="main.js"></script>
 </body>
 </html>
