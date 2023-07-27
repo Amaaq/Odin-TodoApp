@@ -26,20 +26,23 @@ let uid
 document.addEventListener('DOMContentLoaded',()=>{
     if(projectsList != null){
         auth.onAuthStateChanged((user)=>{
-            getDataBase(user).then((res)=>{
+            getDataBase(user)
+            .then((res)=>{
                 if(res){
                 projects.splice(0,projects.length,...res)
                 }
                 updateProjects()
                 updateOptions()
-                
-            }).catch(function(error){
-                return
             })
+            .catch(()=>{
+                updateProjects()
+                updateOptions()
+            })
+
         })
-        window.addEventListener('beforeunload',()=>{
-            signOut(auth)
-        })
+        // window.addEventListener('beforeunload',()=>{
+        //     signOut(auth)
+        // })
         showTodos(projects.find(element=>element.name == "separate").id)
         hideTodoForm()
         hideProjectForm()
@@ -105,7 +108,7 @@ document.addEventListener('DOMContentLoaded',()=>{
                 }else {
                     addTodo(todoForm[0].value,todoForm[3].value!="" ? todoForm[3].value : "NO DESCRIPTION AVAILABLE" ,todoForm[1].value!="" ? todoForm[1].value : "No due Date",todoForm[2].value,todoForm[4].value)
                     updateProjects()
-                    showTodos(projects.find((element=>element.name == todoForm[4].value.toLowerCase().replace('-',' '))).id)
+                    showTodos(projects.find((element=>element.name == todoForm[4].value.toLowerCase().replaceAll('-',' '))).id)
                 }
                 todoForm.reset()
                 todoForm[5].disabled = true
@@ -246,7 +249,7 @@ function showTodos(id){
 function updateOptions(){
     let str = ""
     for(let project of projects){
-        str +=`<option value='${project.name.toLowerCase().replace(" ","-").replace("'",",")}'>${project.name.toUpperCase()}</option>`
+        str +=`<option value='${project.name.toLowerCase().replaceAll(" ","-").replaceAll("'",",")}'>${project.name.toUpperCase()}</option>`
     }
     str +='<option value="new" id="new-project">New Project</option>'
     options.innerHTML = str
