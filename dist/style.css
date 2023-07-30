@@ -342,7 +342,7 @@ header #profile {
 #logo{
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: flex-start;
     font-weight: 700;
     letter-spacing: 2px;
 }
