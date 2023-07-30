@@ -328,6 +328,7 @@ header {
     background-color: var(--primarybg);
     padding-left: 2rem;
     padding-right: 2rem;
+    width: 100vw;
 }
 header #profile {
     display: flex;
